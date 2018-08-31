@@ -1,0 +1,80 @@
+{
+    "name": "awooga",
+    "displayName": "Awooga!",
+    "description": "Colour the whole editor when there are errors or warnings present",
+    "icon": "icon.png",
+    "version": "0.0.1",
+    "publisher": "Gruntfuggly",
+    "repository": "https://github.com/Gruntfuggly/awooga",
+    "engines": {
+        "vscode": "^1.5.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "awooga.enable",
+                "title": "Awooga: Enable"
+            },
+            {
+                "command": "awooga.disable",
+                "title": "Awooga: Disable"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Awooga! configuration",
+            "properties": {
+                "awooga.enabled": {
+                    "type": "object",
+                    "description": "File extensions for which Awooga! is enabled",
+                    "default": {}
+                },
+                "awooga.location": {
+                    "type": "string",
+                    "enum": [
+                        "editor.background",
+                        "activityBar.background",
+                        "sideBar.background",
+                        "statusBar.background"
+                    ],
+                    "description": "Alternative locations to highlight",
+                    "default": "editor.background"
+                },
+                "awooga.errorColour": {
+                    "type": "string",
+                    "description": "The background colour used when errors are present",
+                    "default": "#400000"
+                },
+                "awooga.warningColour": {
+                    "type": "string",
+                    "description": "The background colour used when warnings are present",
+                    "default": "#402000"
+                },
+                "awooga.buttonAlignment": {
+                    "type": "string",
+                    "description": "Alignment of the status bar button",
+                    "enum": [
+                        "Left",
+                        "Right"
+                    ],
+                    "default": "Right"
+                },
+                "awooga.buttonPriority": {
+                    "type": "integer",
+                    "description": "Position priority of the status bar button",
+                    "default": 0
+                }
+            }
+        }
+    },
+    "devDependencies": {
+        "vscode": "^1.0.0"
+    }
+}

@@ -70,6 +70,11 @@
                     "type": "integer",
                     "description": "Position priority of the status bar button",
                     "default": 0
+                },
+                "awooga.originalColorCustomizations": {
+                    "type": "object",
+                    "description": "Backup of original colour settings (automatically generated)",
+                    "default": {}
                 }
             }
         }

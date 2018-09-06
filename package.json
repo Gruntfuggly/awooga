@@ -3,7 +3,7 @@
     "displayName": "Awooga!",
     "description": "Colour the whole editor when there are errors or warnings present",
     "icon": "icon.png",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "Gruntfuggly",
     "repository": "https://github.com/Gruntfuggly/awooga",
     "engines": {

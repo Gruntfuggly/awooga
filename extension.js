@@ -147,46 +147,53 @@ function activate( context )
         vscode.workspace.getConfiguration( 'awooga' ).update( 'enabled', enabled, true );
     }
 
-    context.subscriptions.push( vscode.workspace.onDidOpenTextDocument( function()
+    if( context.storagePath )
     {
-        if( !button )
+        context.subscriptions.push( vscode.workspace.onDidOpenTextDocument( function()
         {
-            createButton();
-        }
-        else
+            if( !button )
+            {
+                createButton();
+            }
+            else
+            {
+                updateButton();
+            }
+        } ) );
+
+        context.subscriptions.push( vscode.languages.onDidChangeDiagnostics( refresh ) );
+        context.subscriptions.push( vscode.window.onDidChangeActiveTextEditor( function( e )
         {
             updateButton();
-        }
-    } ) );
-
-    context.subscriptions.push( vscode.languages.onDidChangeDiagnostics( refresh ) );
-    context.subscriptions.push( vscode.window.onDidChangeActiveTextEditor( function( e )
-    {
-        updateButton();
-        refresh();
-    } ) );
-
-    context.subscriptions.push( vscode.workspace.onDidChangeConfiguration( function( e )
-    {
-        if( e.affectsConfiguration( 'awooga.enabled' ) )
-        {
-            lastLevel = undefined;
-            resetColour();
             refresh();
-            updateButton();
-        }
-        else if(
-            e.affectsConfiguration( 'awooga.buttonAlignment' ) ||
-            e.affectsConfiguration( 'awooga.buttonPriority' ) )
+        } ) );
+
+        context.subscriptions.push( vscode.workspace.onDidChangeConfiguration( function( e )
         {
-            createButton();
-        }
-    } ) );
+            if( e.affectsConfiguration( 'awooga.enabled' ) )
+            {
+                lastLevel = undefined;
+                resetColour();
+                refresh();
+                updateButton();
+            }
+            else if(
+                e.affectsConfiguration( 'awooga.buttonAlignment' ) ||
+                e.affectsConfiguration( 'awooga.buttonPriority' ) )
+            {
+                createButton();
+            }
+        } ) );
 
-    context.subscriptions.push( vscode.commands.registerCommand( 'awooga.enable', function() { configure( true ); } ) );
-    context.subscriptions.push( vscode.commands.registerCommand( 'awooga.disable', function() { configure( false ); } ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'awooga.enable', function() { configure( true ); } ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'awooga.disable', function() { configure( false ); } ) );
 
-    backupOriginalColours();
+        backupOriginalColours();
+    }
+    else
+    {
+        console.log( "Awooga! inhibited because there is no current workspace" );
+    }
 }
 
 function deactivate()
